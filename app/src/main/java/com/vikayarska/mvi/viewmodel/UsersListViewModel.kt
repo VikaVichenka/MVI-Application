@@ -21,7 +21,7 @@ class UsersListViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    val userIntent = MutableStateFlow<UserListIntent>(UserListIntent.FetchUsers)
+    private val userIntent = MutableStateFlow<UserListIntent>(UserListIntent.FetchUsers)
 
     private val _state = MutableLiveData<BaseScreenState<UserList>>(BaseScreenState.Empty())
     val state: LiveData<BaseScreenState<UserList>> get() = _state
@@ -38,6 +38,10 @@ class UsersListViewModel @Inject constructor(
                 is UserListIntent.DeleteUsers -> deleteUsers()
             }
         }
+    }
+
+    fun sendIntent(intent: UserListIntent) = viewModelScope.launch {
+        userIntent.value = intent
     }
 
 

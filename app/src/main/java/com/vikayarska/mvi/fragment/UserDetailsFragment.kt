@@ -16,7 +16,6 @@ import com.vikayarska.mvi.viewmodel.UserDetailsViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.FragmentComponent
 import javax.inject.Inject
 
@@ -33,6 +32,7 @@ class UserDetailsFragment : Fragment() {
     interface ViewModelFactoryProvider {
         fun userDetailsFactory(): UserDetailsViewModel.Factory
     }
+
     @Inject
     lateinit var viewModelAssistedFactory: UserDetailsViewModel.Factory
 
@@ -51,21 +51,23 @@ class UserDetailsFragment : Fragment() {
         val view = binding.root
         setUpViewState()
         binding.ivSaveUserDetails.setOnClickListener {
-            viewModel.userIntent.value = UserDetailsIntent.SaveUser(
-                User(
-                    viewModel.userId,
-                    binding.etNameUserDetails.text.toString(),
-                    binding.etInfoUserItem.text.toString()
+            viewModel.sendIntent(
+                UserDetailsIntent.SaveUser(
+                    User(
+                        viewModel.userId,
+                        binding.etNameUserDetails.text.toString(),
+                        binding.etInfoUserItem.text.toString()
+                    )
                 )
             )
         }
 
         binding.ivCancelUserDetails.setOnClickListener {
-            viewModel.userIntent.value = UserDetailsIntent.FetchUser(viewModel.userId)
+            viewModel.sendIntent(UserDetailsIntent.FetchUser(viewModel.userId))
         }
 
         binding.ivEditUserDetails.setOnClickListener {
-            viewModel.userIntent.value = UserDetailsIntent.EditUser
+            viewModel.sendIntent(UserDetailsIntent.EditUser)
         }
 
         return view

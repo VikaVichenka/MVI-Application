@@ -44,11 +44,11 @@ class UserListFragment : Fragment() {
         }
 
         binding.btAddUsersList.setOnClickListener {
-            viewModel.userIntent.value = UserListIntent.AddUsers
+            viewModel.sendIntent(UserListIntent.AddUsers)
         }
 
         binding.btDeleteUsersList.setOnClickListener {
-            viewModel.userIntent.value = UserListIntent.DeleteUsers
+            viewModel.sendIntent(UserListIntent.DeleteUsers)
         }
 
         return view
@@ -67,7 +67,7 @@ class UserListFragment : Fragment() {
                 is BaseScreenState.Error -> {
                     showLoading(Visibility.Hide)
                     showError(state.message) {
-                        viewModel.userIntent.value = UserListIntent.FetchUsers
+                        viewModel.sendIntent(UserListIntent.FetchUsers)
                     }
                 }
                 is BaseScreenState.Loading -> showLoading(Visibility.Show)
@@ -91,7 +91,7 @@ class UserListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.userIntent.value = UserListIntent.FetchUsers
+        viewModel.sendIntent(UserListIntent.FetchUsers)
     }
 
     override fun onDestroyView() {

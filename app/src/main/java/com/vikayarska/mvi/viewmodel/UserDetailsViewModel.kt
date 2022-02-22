@@ -11,7 +11,6 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,7 +20,8 @@ class UserDetailsViewModel @AssistedInject constructor(
     @Assisted val userId: Int
 ) : ViewModel() {
 
-    val userIntent = MutableStateFlow<UserDetailsIntent>(UserDetailsIntent.FetchUser(userId))
+    private val userIntent =
+        MutableStateFlow<UserDetailsIntent>(UserDetailsIntent.FetchUser(userId))
 
     private val _state = MutableLiveData<UserDetailsScreenState>(UserDetailsScreenState.Empty)
     val state: LiveData<UserDetailsScreenState> get() = _state
@@ -38,6 +38,10 @@ class UserDetailsViewModel @AssistedInject constructor(
                 is UserDetailsIntent.SaveUser -> updateUser(intent.user)
             }
         }
+    }
+
+    fun sendIntent(intent: UserDetailsIntent) = viewModelScope.launch {
+        userIntent.value = intent
     }
 
 
