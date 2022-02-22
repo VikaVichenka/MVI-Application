@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MVI Application</string>
+
+    <!--Generic-->
+    <string name="error">Error</string>
+    <string name="unknown_error_message">Ops! Something went wrong</string>
+    <string name="ok">Ok</string>
+
+    <!--User List-->
+    <string name="title_users_list">Users List</string>
+    <string name="empty_users_list">Opps! No users found(</string>
+
+    <!--User Details-->
+    <string name="title_user_details">Users Details</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_user">No User Found</string>
+</resources>

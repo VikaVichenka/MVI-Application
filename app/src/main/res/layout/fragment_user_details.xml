@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title_user_details"
+        style="@style/TitleTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/headerHeight"
+        android:background="@color/teal_700"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="@string/title_user_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/iv_edit_user_details"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/headerHeight"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="false"
+        android:padding="10dp"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title_user_details"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title_user_details" />
+
+    <ImageButton
+        android:id="@+id/iv_save_user_details"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/headerHeight"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="false"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_outline_save_24"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title_user_details"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title_user_details" />
+
+    <Button
+        android:id="@+id/iv_cancel_user_details"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="true"
+        style="@style/SubTitleTextStyle"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@null"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title_user_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title_user_details" />
+
+
+    <ImageView
+        android:id="@+id/iv_user_item_details"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/regularPadding"
+        android:clickable="false"
+        android:src="@drawable/ic_user_avatar"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_user_details" />
+
+    <EditText
+        android:id="@+id/et_name_user_details"
+        style="@style/SubTitleTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/regularPadding"
+        android:layout_marginTop="@dimen/regularPadding"
+        android:layout_marginEnd="@dimen/regularPadding"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@color/black"
+        android:clickable="false"
+        android:ellipsize="end"
+        android:fontFamily="@font/roboto_bold"
+        android:maxLines="2"
+        android:paddingTop="@dimen/verticalPadding"
+        android:paddingBottom="@dimen/verticalPadding"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_user_item_details"
+        tools:text="First Last Name" />
+
+    <EditText
+        android:id="@+id/et_info_user_item"
+        style="@style/RegularTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/verticalPadding"
+        android:layout_marginBottom="@dimen/regularPadding"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:ellipsize="end"
+        android:paddingTop="@dimen/verticalPadding"
+        android:paddingBottom="@dimen/verticalPadding"
+        android:gravity="top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/et_name_user_details"
+        app:layout_constraintStart_toStartOf="@id/et_name_user_details"
+        app:layout_constraintTop_toBottomOf="@id/et_name_user_details"
+        tools:text="First Last" />
+</androidx.constraintlayout.widget.ConstraintLayout>

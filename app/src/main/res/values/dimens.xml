@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Text Size-->
+    <dimen name="titleTextSize">18sp</dimen>
+    <dimen name="subTitleTextSize">16sp</dimen>
+    <dimen name="regularTextSize">14sp</dimen>
+    <dimen name="notesTextSize">12sp</dimen>
+
+    <!--Spacing-->
+    <dimen name="regularPadding">24dp</dimen>
+    <dimen name="verticalPadding">8dp</dimen>
+
+    <!--View Size-->
+    <dimen name="headerHeight">50dp</dimen>
+</resources>
