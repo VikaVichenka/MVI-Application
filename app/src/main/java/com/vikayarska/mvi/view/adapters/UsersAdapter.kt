@@ -29,6 +29,8 @@ class UsersAdapter(
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = users.size
 
+    fun getItems(): List<User> = users
+
     fun addData(list: List<User>) {
         users.addAll(list)
     }
