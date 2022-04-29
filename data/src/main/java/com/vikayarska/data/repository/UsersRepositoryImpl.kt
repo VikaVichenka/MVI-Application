@@ -22,16 +22,56 @@ class UsersRepositoryImpl @Inject constructor(private val userDao: UserDao) : Us
     override suspend fun addUsers() = withContext(Dispatchers.IO) {
         userDao.insertSuspend(
             listOf(
-                DbUser(name = "Anwen Curry", intro = MOCK_INTRO),
-                DbUser(name = "Haley Ware", intro = MOCK_INTRO),
-                DbUser(name = "Ronan Healy", intro = MOCK_INTRO),
-                DbUser(name = "Rodney Mccullough", intro = MOCK_INTRO),
-                DbUser(name = "Peyton Hinton", intro = MOCK_INTRO),
-                DbUser(name = "Johnathon Pham", intro = MOCK_INTRO),
-                DbUser(name = "Shelbie Avery", intro = MOCK_INTRO),
-                DbUser(name = "Glenda Hensley", intro = MOCK_INTRO),
-                DbUser(name = "Diane Hurst", intro = MOCK_INTRO),
-                DbUser(name = "Jardel Guzman", intro = MOCK_INTRO)
+                DbUser(
+                    name = "Anwen Curry",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/cdi.jpg"
+                ),
+                DbUser(
+                    name = "Haley Ware",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/MTg0MTA4OA.jpg"
+                ),
+                DbUser(
+                    name = "Ronan Healy",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/e9e.jpg"
+                ),
+                DbUser(
+                    name = "Rodney Mccullough",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/MTkzNjg0Ng.jpg"
+                ),
+                DbUser(
+                    name = "Peyton Hinton",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/c2t.jpg"
+                ),
+                DbUser(
+                    name = "Johnathon Pham",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/cin.gif"
+                ),
+                DbUser(
+                    name = "Shelbie Avery",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/VsdKVsL_S.jpg"
+                ),
+                DbUser(
+                    name = "Glenda Hensley",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/ck5pPEKh-.png"
+                ),
+                DbUser(
+                    name = "Diane Hurst",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/6gh.jpg"
+                ),
+                DbUser(
+                    name = "Jardel Guzman",
+                    intro = MOCK_INTRO,
+                    imageUrl = "https://cdn2.thecatapi.com/images/_rsG8aC-T.jpg"
+                )
             )
         )
     }
@@ -44,10 +84,14 @@ class UsersRepositoryImpl @Inject constructor(private val userDao: UserDao) : Us
         userDao.getUserById(id)?.toUser()
     }
 
+    override suspend fun deleteUser(user: User) = withContext(Dispatchers.IO) {
+        userDao.delete(user.toDbUser())
+    }
+
     override suspend fun updateUser(user: User) = withContext(Dispatchers.IO) {
         userDao.update(user.toDbUser())
     }
 }
 
-private fun DbUser.toUser() = User(id, name, intro)
-private fun User.toDbUser() = DbUser(id, name, intro)
+private fun DbUser.toUser() = User(id, name, intro, imageUrl)
+private fun User.toDbUser() = DbUser(id, name, intro, imageUrl)

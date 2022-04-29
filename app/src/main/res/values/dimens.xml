@@ -9,6 +9,7 @@
     <!--Spacing-->
     <dimen name="regularPadding">24dp</dimen>
     <dimen name="verticalPadding">8dp</dimen>
+    <dimen name="roundCorners">10dp</dimen>
 
     <!--View Size-->
     <dimen name="headerHeight">50dp</dimen>

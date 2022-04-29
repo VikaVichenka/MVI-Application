@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.vikayarska.domain.intents.UserDetailsIntent
 import com.vikayarska.domain.model.User
 import com.vikayarska.domain.viewstates.UserDetailsScreenState
@@ -56,7 +57,8 @@ class UserDetailsFragment : Fragment() {
                     User(
                         viewModel.userId,
                         binding.etNameUserDetails.text.toString(),
-                        binding.etInfoUserItem.text.toString()
+                        binding.etInfoUserItem.text.toString(),
+                        viewModel.user?.imageUrl ?: ""
                     )
                 )
             )
@@ -95,6 +97,12 @@ class UserDetailsFragment : Fragment() {
                     binding.ivEditUserDetails.visibility = View.VISIBLE
                     binding.etNameUserDetails.setText(state.user.name)
                     binding.etInfoUserItem.setText(state.user.intro)
+                    val image = binding.ivUserItemDetails
+                    Glide.with(image.context)
+                        .load(state.user.imageUrl)
+                        .circleCrop()
+                        .placeholder(R.drawable.ic_user_avatar)
+                        .into(image)
                     enableEditing(false)
                 }
                 is UserDetailsScreenState.Error -> {

@@ -36,6 +36,7 @@ class UsersListViewModel @Inject constructor(
                 is UserListIntent.FetchUsers -> getUsers()
                 is UserListIntent.AddUsers -> addUsers()
                 is UserListIntent.DeleteUsers -> deleteUsers()
+                is UserListIntent.DeleteUser -> deleteUser(intent.user)
             }
         }
     }
@@ -43,7 +44,6 @@ class UsersListViewModel @Inject constructor(
     fun sendIntent(intent: UserListIntent) = viewModelScope.launch {
         userIntent.value = intent
     }
-
 
     private fun getUsers() = viewModelScope.launch {
         _state.value = BaseScreenState.Loading()
@@ -66,6 +66,10 @@ class UsersListViewModel @Inject constructor(
 
     private fun deleteUsers() = viewModelScope.launch {
         performRequest { userRepository.deleteUsers() }
+    }
+
+    private fun deleteUser(user: User) = viewModelScope.launch {
+        performRequest { userRepository.deleteUser(user) }
     }
 
     private suspend fun performRequest(request: suspend () -> Unit) {

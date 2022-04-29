@@ -12,4 +12,5 @@ data class DbUser(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "user_name") val name: String,
     var intro: String,
+    val imageUrl: String
 ) : Serializable

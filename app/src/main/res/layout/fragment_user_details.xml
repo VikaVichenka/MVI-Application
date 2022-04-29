@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/tv_title_user_details"
-        style="@style/TitleTextStyle"
+        style="@style/TitleTextStyleWhite"
         android:layout_width="0dp"
         android:layout_height="@dimen/headerHeight"
         android:background="@color/teal_700"

@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.vikayarska.domain.intents.UserListIntent
+import com.vikayarska.domain.model.User
 import com.vikayarska.domain.viewstates.BaseScreenState
 import com.vikayarska.mvi.databinding.FragmentUsersListBinding
 import com.vikayarska.mvi.view.adapters.UsersAdapter
+import com.vikayarska.mvi.view.custom.UserLayout
 import com.vikayarska.mvi.viewmodel.UsersListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,9 +41,12 @@ class UserListFragment : Fragment() {
                 UserListFragmentDirections.actionUsersListFragmentToUserDetailsFragment(it.id)
             )
         })
-        binding.rvUsersList.apply {
-            adapter = userAdapter
-        }
+
+        binding.userList.setUserLayoutListener(object : UserLayout.UserLayoutListener {
+            override fun onItemRemoved(item: User) {
+                viewModel.sendIntent(UserListIntent.DeleteUser(user = item))
+            }
+        })
 
         binding.btAddUsersList.setOnClickListener {
             viewModel.sendIntent(UserListIntent.AddUsers)
@@ -61,8 +66,7 @@ class UserListFragment : Fragment() {
                 is BaseScreenState.Loaded -> {
                     showEmptyView(false)
                     showLoading(Visibility.Hide)
-                    userAdapter.replaceData(state.data)
-                    userAdapter.notifyDataSetChanged()
+                    binding.userList.setItems(state.data)
                 }
                 is BaseScreenState.Error -> {
                     showLoading(Visibility.Hide)
@@ -82,10 +86,10 @@ class UserListFragment : Fragment() {
     private fun showEmptyView(toShow: Boolean) {
         if (toShow) {
             binding.tvEmptyUsersList.visibility = View.VISIBLE
-            binding.rvUsersList.visibility = View.GONE
+            binding.userList.visibility = View.GONE
         } else {
             binding.tvEmptyUsersList.visibility = View.GONE
-            binding.rvUsersList.visibility = View.VISIBLE
+            binding.userList.visibility = View.VISIBLE
         }
     }
 

@@ -23,6 +23,8 @@ class UserDetailsViewModel @AssistedInject constructor(
     private val userIntent =
         MutableStateFlow<UserDetailsIntent>(UserDetailsIntent.FetchUser(userId))
 
+    var user: User? = null
+
     private val _state = MutableLiveData<UserDetailsScreenState>(UserDetailsScreenState.Empty)
     val state: LiveData<UserDetailsScreenState> get() = _state
 
@@ -34,7 +36,9 @@ class UserDetailsViewModel @AssistedInject constructor(
         userIntent.collect { intent ->
             when (intent) {
                 is UserDetailsIntent.FetchUser -> getUser(intent.id)
-                is UserDetailsIntent.EditUser -> _state.value = UserDetailsScreenState.Editing
+                is UserDetailsIntent.EditUser -> {
+                    _state.value = UserDetailsScreenState.Editing
+                }
                 is UserDetailsIntent.SaveUser -> updateUser(intent.user)
             }
         }
@@ -53,6 +57,7 @@ class UserDetailsViewModel @AssistedInject constructor(
                 if (user == null) {
                     UserDetailsScreenState.Empty
                 } else {
+                    this@UserDetailsViewModel.user = user
                     UserDetailsScreenState.Preview(user)
                 }
             }, onFailure = {
@@ -65,6 +70,7 @@ class UserDetailsViewModel @AssistedInject constructor(
 
         runCatching { userRepository.updateUser(user) }.fold(
             onSuccess = {
+                this@UserDetailsViewModel.user = user
                 _state.value = UserDetailsScreenState.Preview(user)
             }, onFailure = {
                 _state.value = UserDetailsScreenState.Error(it.localizedMessage)

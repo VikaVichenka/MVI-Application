@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/tv_title_users_list"
-        style="@style/TitleTextStyle"
+        style="@style/TitleTextStyleWhite"
         android:layout_width="0dp"
         android:layout_height="@dimen/headerHeight"
         android:background="@color/teal_700"
@@ -18,17 +18,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_users_list"
+    <com.vikayarska.mvi.view.custom.UserLayout
+        android:id="@+id/user_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_users_list"
-        tools:itemCount="5"
-        tools:listitem="@layout/layout_user_item" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title_users_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bt_add_users_list"
@@ -54,7 +52,7 @@
 
     <TextView
         android:id="@+id/tv_empty_users_list"
-        style="@style/TitleTextStyle"
+        style="@style/TitleTextStyleWhite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
