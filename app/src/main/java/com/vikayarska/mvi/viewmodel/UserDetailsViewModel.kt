@@ -1,10 +1,13 @@
 package com.vikayarska.mvi.viewmodel
 
 import androidx.lifecycle.*
+import com.vikayarska.data.mapper.mapUserToApplicationUser
+import com.vikayarska.data.viewstate.UserDetailsScreenState
 import com.vikayarska.domain.intents.UserDetailsIntent
+import com.vikayarska.domain.model.BaseResult
+import com.vikayarska.domain.model.UpdateResult
 import com.vikayarska.domain.model.User
-import com.vikayarska.domain.repository.UserRepository
-import com.vikayarska.domain.viewstates.UserDetailsScreenState
+import com.vikayarska.domain.user.UserUseCaseFacade
 import dagger.Module
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,7 +19,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class UserDetailsViewModel @AssistedInject constructor(
-    private val userRepository: UserRepository,
+    private val userUseCaseFacade: UserUseCaseFacade,
     @Assisted val userId: Int
 ) : ViewModel() {
 
@@ -48,27 +51,21 @@ class UserDetailsViewModel @AssistedInject constructor(
     private fun getUser(userId: Int) = viewModelScope.launch {
         _state.value = UserDetailsScreenState.Loading
 
-        _state.value = runCatching { userRepository.getUserById(userId) }.fold(
-            onSuccess = { user ->
-                if (user == null) {
-                    UserDetailsScreenState.Empty
-                } else {
-                    UserDetailsScreenState.Preview(user)
-                }
-            }, onFailure = {
-                UserDetailsScreenState.Error(it.localizedMessage)
-            })
+        _state.value = when (val user = userUseCaseFacade.getUser.getUserById(userId)) {
+            is BaseResult.Success -> UserDetailsScreenState.Preview(mapUserToApplicationUser(user.data))
+            is BaseResult.Empty -> UserDetailsScreenState.Empty
+            is BaseResult.Error -> UserDetailsScreenState.Error(user.message)
+        }
     }
 
     private fun updateUser(user: User) = viewModelScope.launch {
         _state.value = UserDetailsScreenState.Loading
 
-        runCatching { userRepository.updateUser(user) }.fold(
-            onSuccess = {
-                _state.value = UserDetailsScreenState.Preview(user)
-            }, onFailure = {
-                _state.value = UserDetailsScreenState.Error(it.localizedMessage)
-            })
+        _state.value = when (val result = userUseCaseFacade.updateUser.updateUser(user)) {
+            is UpdateResult.Success -> UserDetailsScreenState.Preview(mapUserToApplicationUser(user))
+            is UpdateResult.Empty -> UserDetailsScreenState.Empty
+            is UpdateResult.Error -> UserDetailsScreenState.Error(result.message)
+        }
     }
 
     @AssistedFactory

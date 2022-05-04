@@ -13,6 +13,11 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField("String", "API_KEY_RANDOM_TEXT", '"bbe5ae7093f04fd295081d642c44ef61"')
+        buildConfigField("String", "API_KEY_CAT_IMAGES", '"bc2ba65f-098b-4452-8616-bb7ae9bca0de"')
+        buildConfigField("String", "LINK_CAT_IMAGES", '"https://api.thecatapi.com/"')
+        buildConfigField("String", "LINK_RANDOM_TEXT", '"https://randommer.io/"')
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -48,9 +53,14 @@ dependencies {
     implementation("androidx.room:room-rxjava3:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
-
     //Paging
     implementation("androidx.paging:paging-runtime-ktx:$paging_version")
+
+    //Network
+    implementation("com.google.code.gson:gson:$gson_version")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version")
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

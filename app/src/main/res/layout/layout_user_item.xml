@@ -11,8 +11,6 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:clickable="false"
-        android:src="@drawable/ic_user_avatar"
-
         android:layout_margin="@dimen/regularPadding"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

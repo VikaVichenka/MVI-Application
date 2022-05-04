@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.vikayarska.data.viewstate.UserDetailsScreenState
 import com.vikayarska.domain.intents.UserDetailsIntent
 import com.vikayarska.domain.model.User
-import com.vikayarska.domain.viewstates.UserDetailsScreenState
 import com.vikayarska.mvi.R
 import com.vikayarska.mvi.databinding.FragmentUserDetailsBinding
 import com.vikayarska.mvi.viewmodel.UserDetailsViewModel
@@ -17,6 +18,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.FragmentComponent
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -56,7 +58,9 @@ class UserDetailsFragment : Fragment() {
                     User(
                         viewModel.userId,
                         binding.etNameUserDetails.text.toString(),
-                        binding.etInfoUserItem.text.toString()
+                        binding.etInfoUserItem.text.toString(),
+                        Date(),
+                        "", User.UserImage("", "")
                     )
                 )
             )
@@ -93,7 +97,14 @@ class UserDetailsFragment : Fragment() {
                 is UserDetailsScreenState.Preview -> {
                     showLoading(Visibility.Hide)
                     binding.ivEditUserDetails.visibility = View.VISIBLE
-                    binding.etNameUserDetails.setText(state.user.name)
+
+                    Glide.with(binding.ivUserItemDetails.context)
+                        .load(state.user.imageUrl)
+                        .circleCrop()
+                        .placeholder(R.drawable.ic_user_avatar)
+                        .into(binding.ivUserItemDetails)
+
+                    binding.etNameUserDetails.setText(state.user.firstName)
                     binding.etInfoUserItem.setText(state.user.intro)
                     enableEditing(false)
                 }
